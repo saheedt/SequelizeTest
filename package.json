@@ -6,6 +6,7 @@
   "scripts": {
     "postinstall": "gulp dev",
     "start": "node ./build/server.js",
+    "build": "gulp dev",
     "dev": "nodemon ./server/server.js --exec babel-node",
     "test": "gulp dev && gulp coverage",
     "lint": "eslint server"
@@ -32,6 +33,7 @@
     "babel-eslint": "8.1.2",
     "babel-preset-es2015": "6.24.1",
     "babel-preset-stage-2": "6.24.1",
+    "babel-register": "6.26.0",
     "body-parser": "1.18.2",
     "express": "4.16.2",
     "gulp": "3.9.1",
