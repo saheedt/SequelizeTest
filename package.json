@@ -1,0 +1,52 @@
+{
+  "name": "sequelizetest",
+  "version": "1.0.0",
+  "description": "Sequelize functionalities test with CI.",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "gulp dev",
+    "start": "node ./build/server.js",
+    "build": "gulp dev",
+    "dev": "nodemon ./server/server.js --exec babel-node",
+    "test": "gulp dev && gulp coverage",
+    "lint": "eslint server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saheedt/SequelizeTest.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/saheedt/SequelizeTest/issues"
+  },
+  "homepage": "https://github.com/saheedt/SequelizeTest#readme",
+  "devDependencies": {
+    "eslint": "4.14.0",
+    "eslint-config-airbnb-base": "12.1.0",
+    "eslint-plugin-import": "2.8.0",
+    "nodemon": "1.14.3"
+  },
+  "dependencies": {
+    "babel-cli": "6.26.0",
+    "babel-core": "6.26.0",
+    "babel-eslint": "8.1.2",
+    "babel-preset-es2015": "6.24.1",
+    "babel-preset-stage-2": "6.24.1",
+    "babel-register": "6.26.0",
+    "body-parser": "1.18.2",
+    "dotenv": "4.0.0",
+    "express": "4.16.2",
+    "gulp": "3.9.1",
+    "gulp-babel": "7.0.0",
+    "gulp-exit": "0.0.2",
+    "gulp-inject-modules": "1.0.0",
+    "gulp-istanbul": "1.1.2",
+    "gulp-jasmine-node": "1.0.7",
+    "gulp-nodemon": "2.2.1",
+    "morgan": "1.9.0",
+    "pg": "7.4.0",
+    "pg-hstore": "2.3.2",
+    "sequelize": "4.28.6"
+  }
+}
