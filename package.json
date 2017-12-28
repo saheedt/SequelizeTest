@@ -4,7 +4,10 @@
   "description": "Sequelize functionalities test with CI.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "gulp dev",
+    "start": "node ./build/server.js",
+    "dev": "nodemon ./server/server.js --exec babel-node",
+    "test": "gulp dev && gulp coverage",
     "lint": "eslint server"
   },
   "repository": {
