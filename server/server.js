@@ -3,6 +3,9 @@ import express from 'express';
 // import path from 'path';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 const port = parseInt(process.env.PORT, 10) || 8001;
