@@ -44,6 +44,10 @@ export default class userController extends baseController {
                   createdUser.dataValues.id,
                   createdUser.dataValues.email,
                 );
+                res.loggedInUser = {
+                  id: createdUser.dataValues.id,
+                  email: createdUser.dataValues.email
+                };
                 res.status(200).send({
                   message: 'sign up successful',
                   user: createdUser,
@@ -97,9 +101,12 @@ export default class userController extends baseController {
             delete user.dataValues.password;
             delete user.dataValues.updatedAt;
             delete user.dataValues.createdAt;
+            res.loggedInUser = {
+              id: user.dataValues.id,
+              email: user.dataValues.email
+            };
             return res.status(200).send({
               message: 'sign in successful',
-              user,
               token
             });
           });
