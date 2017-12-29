@@ -49,10 +49,11 @@ export default class baseController {
    * @param {Object} req client's request
    * @param {Object} res server response
    * @param {Function} next calls appropriate controller
+   * @returns {Object} response object
    */
   static isAuthorized(req, res, next) {
     if (!req.headers.authorization) {
-      res.status(500).send({
+      return res.status(500).send({
         message: 'unauthorized user'
       });
     }
@@ -68,5 +69,25 @@ export default class baseController {
         }
       }
     );
+  }
+
+  /**
+   * @description Checks if Email Exists
+   * @static
+   * @param {object} req Client's request
+   * @param {object} res Server Response
+   * @param {object} user user details
+   * @returns {boolean} true or false
+   * @memberof baseController
+   */
+
+  static emailExists(req, res, user) {
+    if (user) {
+      response.status(400).send({
+        message: 'Email already exists',
+      });
+      return true;
+    }
+    return false;
   }
 }

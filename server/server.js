@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 
 import Routes from './router/routes';
+import { log } from 'util';
 
 dotenv.config();
 
@@ -33,5 +34,5 @@ app.route('*').delete((req, res) => res.status(404).send({
 
 const server = http.createServer(app);
 server.listen(port);
-
+log(`listening on port: ${port}`);
 export default server;
