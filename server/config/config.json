@@ -1,6 +1,7 @@
 {
   "development": {
-    "use_env-variable" : "DATABASE_URL"
+    "use_env-variable" : "DATABASE_URL",
+    "dialect": "postgres"
   },
   "test": {
     "username": "user",

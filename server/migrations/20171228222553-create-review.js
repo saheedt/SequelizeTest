@@ -1,5 +1,5 @@
 
-export default {
+module.exports = {
   up: (queryInterface, Sequelize) =>
     queryInterface.createTable('Reviews', {
       id: {
@@ -17,7 +17,7 @@ export default {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {
-          model: 'Recipe',
+          model: 'Recipes',
           key: 'id',
           as: 'recipeId'
         }
