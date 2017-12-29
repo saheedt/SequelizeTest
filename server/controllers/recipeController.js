@@ -33,7 +33,7 @@ export default class recipeController extends baseController {
       }));
   }
   /**
-    * @description List all recipe
+    * @description Allow authorized user List all recipe
     * @static
     * @param {object} req Client's request
     * @param {object} res Server Response
@@ -51,6 +51,48 @@ export default class recipeController extends baseController {
         message: 'success',
         recipes
       }))
+      .catch(error => res.status(500).send({
+        message: 'error getting recipes',
+        error: error.toString()
+      }));
+  }
+  /**
+    * @description Allows authorized user update own recipe
+    * @static
+    * @param {object} req Client's request
+    * @param {object} res Server Response
+    * @returns {object} Recipe
+    * @memberof recipeController
+   */
+  static update(req, res) {
+    return Recipe
+      .findOne({
+        where: {
+          id: req.params.recipeId
+        },
+        include: [{
+          model: User,
+          attributes: ['id', 'email']
+        }]
+      }).then((recipes) => {
+        if (recipes.dataValues.userId === req.loggedInUser.id) {
+          return recipes
+            .update({
+              name: req.body.name || recipes.dataValues.name,
+              content: req.body.content || recipes.dataValues.content
+            })
+            .then((updateRecipe) => {
+              res.status(200).send({
+                message: 'recipe update successful',
+                recipe: updateRecipe
+              });
+            })
+            .catch(updateRecipeError => res.status(500).send({
+              message: 'error updating recipe',
+              error: updateRecipeError.toString()
+            }));
+        }
+      })
       .catch(error => res.status(500).send({
         message: 'error getting recipes',
         error: error.toString()
