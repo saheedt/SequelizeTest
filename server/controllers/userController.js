@@ -1,4 +1,4 @@
-import { hash } from 'bcrypt';
+import { hash, compare } from 'bcrypt';
 
 import baseController from './baseController';
 
@@ -60,6 +60,54 @@ export default class userController extends baseController {
       .catch(userError => res.status(500).send({
         message: 'unexpected error, try again',
         error: userError.toString()
+      }));
+  }
+
+  /**
+   * @description Allows registered users sign in
+   * @static
+   * @param {object} req Client's request
+   * @param {object} res Server Response
+   * @returns {Function} User
+   * @memberof userController
+   */
+
+  static login(req, res) {
+    return User
+      .findOne({
+        where: {
+          email: req.body.email
+        },
+        attributes: {
+          excludes: ['createdAt', 'updatedAt']
+        }
+      })
+      .then((user) => {
+        if (userController.isUser(req, res, user)) {
+          compare(req.body.password, user.dataValues.password, (err, resp) => {
+            if (!resp || err) {
+              return res.status(400).send({
+                message: 'wrong email or password'
+              });
+            }
+            const token = userController.sign(
+              user.dataValues.id,
+              user.dataValues.email
+            );
+            delete user.dataValues.password;
+            delete user.dataValues.updatedAt;
+            delete user.dataValues.createdAt;
+            return res.status(200).send({
+              message: 'sign in successful',
+              user,
+              token
+            });
+          });
+        }
+      })
+      .catch(error => res.status(500).send({
+        message: 'unexpected error, try again',
+        error: error.toString()
       }));
   }
 }
