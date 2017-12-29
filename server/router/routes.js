@@ -11,7 +11,8 @@ const Routes = (app) => {
     .post(recipeController.isAuthorized, recipeController.create);
   app.route('/api/v1/recipes/:recipeId')
     .put(recipeController.isAuthorized, recipeController.update);
-  app.route('/api/v1/recipes/:recipeId').delete();
+  app.route('/api/v1/recipes/:recipeId')
+    .delete(recipeController.isAuthorized, recipeController.destroy);
   app.route('/api/v1/recipes')
     .get(recipeController.isAuthorized, recipeController.list);
 };

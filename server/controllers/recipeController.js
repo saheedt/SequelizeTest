@@ -92,10 +92,44 @@ export default class recipeController extends baseController {
               error: updateRecipeError.toString()
             }));
         }
+        res.status(401).send({
+          message: 'unauthorized, recipe belongs to another user'
+        });
       })
       .catch(error => res.status(500).send({
         message: 'error getting recipes',
         error: error.toString()
+      }));
+  }
+  /**
+    * @description Allows authorized user delete own recipe
+    * @static
+    * @param {object} req Client's request
+    * @param {object} res Server Response
+    * @returns {object} Recipe
+    * @memberof recipeController
+   */
+  static destroy(req, res) {
+    return Recipe
+      .findById(req.params.recipeId)
+      .then((recipe) => {
+        if (recipe.dataValues.userId === req.loggedInUser.id) {
+          return recipe
+            .destroy()
+            .then(() => res.status(200).send({
+              message: 'recipe successfully deleted'
+            }))
+            .catch(error => res.status(500).send({
+              message: 'unexpected error occured deleting recipe',
+              error: error.toString()
+            }));
+        }
+        res.status(401).send({
+          message: 'unauthorized, recipe belongs to another user'
+        });
+      })
+      .catch(error => res.status(500).send({
+        message: 'unexpected error occured', error: error.toString()
       }));
   }
 }
