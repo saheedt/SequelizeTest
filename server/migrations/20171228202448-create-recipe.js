@@ -25,14 +25,17 @@ export default {
         type: Sequelize.DATE
       },
       upVotes: {
+        allowNull: false,
         defaultValue: 0,
         type: Sequelize.INTEGER
       },
       downVotes: {
+        allowNull: false,
         defaultValue: 0,
         type: Sequelize.INTEGER
       },
       userId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {
