@@ -44,7 +44,7 @@ export default class userController extends baseController {
                   createdUser.dataValues.id,
                   createdUser.dataValues.email,
                 );
-                res.loggedInUser = {
+                req.loggedInUser = {
                   id: createdUser.dataValues.id,
                   email: createdUser.dataValues.email
                 };
@@ -101,7 +101,7 @@ export default class userController extends baseController {
             delete user.dataValues.password;
             delete user.dataValues.updatedAt;
             delete user.dataValues.createdAt;
-            res.loggedInUser = {
+            req.loggedInUser = {
               id: user.dataValues.id,
               email: user.dataValues.email
             };
