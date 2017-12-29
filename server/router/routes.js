@@ -1,5 +1,6 @@
 import userController from '../controllers/userController';
 import recipeController from '../controllers/recipeController';
+import reviewController from '../controllers/reviewControllers';
 
 const Routes = (app) => {
   // user endpoints
@@ -15,5 +16,9 @@ const Routes = (app) => {
     .delete(recipeController.isAuthorized, recipeController.destroy);
   app.route('/api/v1/recipes')
     .get(recipeController.isAuthorized, recipeController.list);
+
+  // review endpoints
+  app.route('/api/v1/recipes/:recipeId/reviews')
+    .post(reviewController.isAuthorized, reviewController.create);
 };
 export default Routes;
