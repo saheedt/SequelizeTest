@@ -2,7 +2,7 @@ import gulp from 'gulp';
 import nodemon from 'gulp-nodemon';
 import babel from 'gulp-babel';
 import jasmineNode from 'gulp-jasmine-node';
-import istabul from 'gulp-istanbul';
+import istanbul from 'gulp-istanbul';
 import injectModules from 'gulp-inject-modules';
 import exit from 'gulp-exit';
 

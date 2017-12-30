@@ -8,6 +8,7 @@
     "start": "node ./build/server.js",
     "build": "gulp dev",
     "dev": "nodemon ./server/server.js --exec babel-node",
+    "dev:test": "gulp dev && gulp test",
     "test": "gulp dev && gulp coverage",
     "lint": "eslint server"
   },
@@ -22,10 +23,13 @@
   },
   "homepage": "https://github.com/saheedt/SequelizeTest#readme",
   "devDependencies": {
+    "chai": "4.1.2",
     "eslint": "4.14.0",
     "eslint-config-airbnb-base": "12.1.0",
     "eslint-plugin-import": "2.8.0",
-    "nodemon": "1.14.3"
+    "mocha": "4.1.0",
+    "nodemon": "1.14.3",
+    "supertest": "3.0.0"
   },
   "dependencies": {
     "babel-cli": "6.26.0",

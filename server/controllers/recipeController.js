@@ -1,4 +1,3 @@
-
 import baseController from '../controllers/baseController';
 
 const { User, Recipe } = require('../models');

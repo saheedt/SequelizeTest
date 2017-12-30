@@ -1,17 +1,9 @@
-
-/*
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
-const config = require(`${__dirname}/../config/config.json`)[env];
-*/
-
 import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
-import configfile from '../config/config.json';
+
+const configfile = require('../config/config.json');
+// import configfile from '../config/config.json';
 
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';

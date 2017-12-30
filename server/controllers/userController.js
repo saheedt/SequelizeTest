@@ -1,9 +1,7 @@
 import { hash, compare } from 'bcrypt';
-
 import baseController from './baseController';
 
 const { User, Review } = require('../models');
-
 const saltRounds = 10;
 
 /**
@@ -20,7 +18,6 @@ export default class userController extends baseController {
     * @returns {Function} User
     * @memberof userController
     */
-
   static create(req, res) {
     return User
       .findOne({
@@ -44,7 +41,7 @@ export default class userController extends baseController {
                   createdUser.dataValues.id,
                   createdUser.dataValues.email,
                 );
-                res.status(200).send({
+                res.status(201).send({
                   message: 'sign up successful',
                   user: createdUser,
                   token
@@ -62,7 +59,6 @@ export default class userController extends baseController {
         error: userError.toString()
       }));
   }
-
   /**
    * @description Allows registered users sign in
    * @static
@@ -71,7 +67,6 @@ export default class userController extends baseController {
    * @returns {Function} User
    * @memberof userController
    */
-
   static login(req, res) {
     return User
       .findOne({

@@ -1,4 +1,3 @@
-
 import baseController from './baseController';
 
 const { Review } = require('../models');

@@ -5,7 +5,6 @@ import jwt from 'jsonwebtoken';
  * @export
  * @class baseController
  */
-
 export default class baseController {
   /**
    * @description Checks if User exists
@@ -71,7 +70,6 @@ export default class baseController {
       }
     );
   }
-
   /**
    * @description Checks if Email Exists
    * @static
@@ -81,7 +79,6 @@ export default class baseController {
    * @returns {boolean} true or false
    * @memberof baseController
    */
-
   static emailExists(req, res, user) {
     if (user) {
       response.status(400).send({
