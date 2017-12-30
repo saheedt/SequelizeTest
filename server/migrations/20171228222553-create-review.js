@@ -22,6 +22,16 @@ module.exports = {
           as: 'recipeId'
         }
       },
+      userId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Users',
+          key: 'id',
+          as: 'userId'
+        }
+      },
       by: {
         allowNull: false,
         type: Sequelize.STRING

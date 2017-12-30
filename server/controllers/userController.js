@@ -2,7 +2,7 @@ import { hash, compare } from 'bcrypt';
 
 import baseController from './baseController';
 
-const { User } = require('../models');
+const { User, Review } = require('../models');
 
 const saltRounds = 10;
 
@@ -106,6 +106,42 @@ export default class userController extends baseController {
       })
       .catch(error => res.status(500).send({
         message: 'unexpected error, try again',
+        error: error.toString()
+      }));
+  }
+  /**
+    * @description Allows users list reviews
+    * @static
+    * @param {object} req Client's request
+    * @param {object} res Server Response
+    * @returns {Function} User
+    * @memberof userController
+    */
+  static listrecipe(req, res) {
+    return User
+      .findOne({
+        where: {
+          id: req.params.userId
+        },
+        include: [{
+          model: Review,
+          as: 'reviews'
+        }],
+        attributes: ['id', 'email', 'createdAt', 'updatedAt']
+      })
+      .then((recipes) => {
+        if (!recipes) {
+          return res.status(404).send({
+            message: 'no recipe found for this user'
+          });
+        }
+        res.status(200).send({
+          message: 'recipes retrieved successfully',
+          recipes
+        });
+      })
+      .catch(error => res.status(500).send({
+        message: 'unexpected error',
         error: error.toString()
       }));
   }

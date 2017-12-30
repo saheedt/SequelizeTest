@@ -18,12 +18,12 @@ export default class reviewController extends baseController {
     * @memberof reviewController
     */
   static create(req, res) {
-    console.log('recipeId', req.params.recipeId);
     return Review
       .create({
         entry: req.body.entry,
         by: req.loggedInUser.email,
-        recipeId: parseInt(req.params.recipeId, 10)
+        recipeId: parseInt(req.params.recipeId, 10),
+        userId: parseInt(req.loggedInUser.id, 10)
       })
       .then(review => res.status(200).send({
         message: 'recipe review added successfully',

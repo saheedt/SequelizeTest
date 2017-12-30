@@ -24,10 +24,21 @@ export default class recipeController extends baseController {
         content: req.body.content,
         userId: req.loggedInUser.id
       })
-      .then(recipe => res.status(200).send({
-        message: 'recipe successfully created', recipe
-      }))
+      .then((recipe) => {
+        if (!recipe) {
+          return res.status(500).send({
+            status: 'Fail',
+            message: 'error creating recipe'
+          });
+        }
+        res.status(200).send({
+          status: 'Success',
+          message: 'recipe successfully created',
+          data: recipe
+        });
+      })
       .catch(recipeError => res.status(500).send({
+        status: 'Fail',
         message: 'error creating recipe',
         error: recipeError.toString()
       }));
@@ -47,11 +58,21 @@ export default class recipeController extends baseController {
           model: User,
           attributes: ['id', 'email']
         }]
-      }).then(recipes => res.status(200).send({
-        message: 'success',
-        recipes
-      }))
+      }).then((recipes) => {
+        if (!recipes) {
+          return res.status(400).send({
+            status: 'Fail',
+            message: 'no recipe recorded yet'
+          });
+        }
+        res.status(200).send({
+          status: 'Success',
+          message: 'recipe list',
+          data: recipes
+        });
+      })
       .catch(error => res.status(500).send({
+        status: 'Fail',
         message: 'error getting recipes',
         error: error.toString()
       }));
@@ -75,6 +96,12 @@ export default class recipeController extends baseController {
           attributes: ['id', 'email']
         }]
       }).then((recipes) => {
+        if (!recipes) {
+          return res.status(404).send({
+            status: 'Fail',
+            message: 'can not update non-existing recipe'
+          });
+        }
         if (recipes.dataValues.userId === req.loggedInUser.id) {
           return recipes
             .update({
@@ -82,21 +109,31 @@ export default class recipeController extends baseController {
               content: req.body.content || recipes.dataValues.content
             })
             .then((updateRecipe) => {
+              if (!updateRecipe) {
+                return res.status(500).send({
+                  status: 'Fail',
+                  message: 'error occured during update, try again'
+                });
+              }
               res.status(200).send({
+                status: 'Success',
                 message: 'recipe update successful',
-                recipe: updateRecipe
+                data: updateRecipe
               });
             })
             .catch(updateRecipeError => res.status(500).send({
+              status: 'Fail',
               message: 'error updating recipe',
               error: updateRecipeError.toString()
             }));
         }
         res.status(401).send({
+          status: 'Fail',
           message: 'unauthorized, recipe belongs to another user'
         });
       })
       .catch(error => res.status(500).send({
+        status: 'Fail',
         message: 'error getting recipes',
         error: error.toString()
       }));
@@ -113,23 +150,34 @@ export default class recipeController extends baseController {
     return Recipe
       .findById(req.params.recipeId)
       .then((recipe) => {
+        if (!recipe) {
+          return res.status(404).send({
+            status: 'Fail',
+            message: 'Recipe not found, nothing to destroy'
+          });
+        }
         if (recipe.dataValues.userId === req.loggedInUser.id) {
           return recipe
             .destroy()
             .then(() => res.status(200).send({
+              status: 'Success',
               message: 'recipe successfully deleted'
             }))
             .catch(error => res.status(500).send({
+              status: 'Fail',
               message: 'unexpected error occured deleting recipe',
               error: error.toString()
             }));
         }
         res.status(401).send({
+          status: 'Fail',
           message: 'unauthorized, recipe belongs to another user'
         });
       })
       .catch(error => res.status(500).send({
-        message: 'unexpected error occured', error: error.toString()
+        status: 'Fail',
+        message: 'unexpected error occured',
+        error: error.toString()
       }));
   }
 }

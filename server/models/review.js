@@ -12,12 +12,20 @@ export default (sequelize, DataTypes) => {
     recipeId: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
   });
 
   Review.associate = (models) => {
     Review.belongsTo(models.Recipe, {
       foreignKey: 'recipeId',
+      onDelete: 'CASCADE'
+    });
+    Review.belongsTo(models.User, {
+      foreignKey: 'userId',
       onDelete: 'CASCADE'
     });
   };
