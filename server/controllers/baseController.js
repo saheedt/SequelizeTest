@@ -52,7 +52,7 @@ export default class baseController {
    */
   static isAuthorized(req, res, next) {
     if (!req.headers.authorization) {
-      return res.status(500).send({
+      return res.status(401).send({
         message: 'unauthorized user'
       });
     }
@@ -81,11 +81,45 @@ export default class baseController {
    */
   static emailExists(req, res, user) {
     if (user) {
-      response.status(400).send({
+      res.status(400).send({
         message: 'Email already exists',
       });
       return true;
     }
     return false;
+  }
+  /**
+   * @description Checks if string is empty or null
+   * @static
+   * @param {object} str string for test
+   * @returns {boolean} true or false
+   * @memberof baseController
+   */
+  static isEmptyOrNull(str) {
+    return (!str || /^\s*$/.test(str));
+  }
+  /**
+   * @description Checks if password is valid
+   * @static
+   * @param {object} req Client's request
+   * @param {object} res Server Response
+   * @param {object} password password
+   * @returns {boolean} true or false
+   * @memberof baseController
+   */
+  static isPasswordValid(req, res, password) {
+    if (baseController.isEmptyOrNull(password)) {
+      res.status(400).send({
+        message: 'password can not be empty or null'
+      });
+      return false;
+    }
+    if (password.length < 6) {
+      res.status(400).send({
+        message: 'password should be 6 or more characters long'
+      });
+      return false;
+    }
+    return true;
   }
 }

@@ -10,6 +10,7 @@ module.exports = {
       },
       email: {
         validate: {
+          notEmpty: true,
           isEmail: true
         },
         allowNull: false,
@@ -17,8 +18,11 @@ module.exports = {
         type: Sequelize.STRING
       },
       password: {
+        validate: {
+          notEmpty: true
+        },
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,

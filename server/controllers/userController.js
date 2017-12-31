@@ -2,6 +2,7 @@ import { hash, compare } from 'bcrypt';
 import baseController from './baseController';
 
 const { User, Review } = require('../models');
+
 const saltRounds = 10;
 
 /**
@@ -19,6 +20,11 @@ export default class userController extends baseController {
     * @memberof userController
     */
   static create(req, res) {
+    if (userController.isEmptyOrNull(req.body.email)) {
+      return res.status(400).send({
+        message: 'email can not be empty or null'
+      });
+    }
     return User
       .findOne({
         where: {
@@ -26,7 +32,8 @@ export default class userController extends baseController {
         }
       })
       .then((user) => {
-        if (!userController.emailExists(req, res, user)) {
+        if (!userController.emailExists(req, res, user) &&
+        userController.isPasswordValid(req, res, req.body.password)) {
           hash(req.body.password, saltRounds, (err, hashed) => {
             return User
               .create({

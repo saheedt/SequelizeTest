@@ -5,12 +5,16 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
       validate: {
+        notEmpty: true,
         isEmail: true
       }
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
     }
   });
 

@@ -5,6 +5,9 @@ import jasmineNode from 'gulp-jasmine-node';
 import istanbul from 'gulp-istanbul';
 import injectModules from 'gulp-inject-modules';
 import exit from 'gulp-exit';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 process.env.NODE_ENV = 'test';
 
@@ -36,7 +39,7 @@ gulp.task('test', () => {
     .pipe(exit());
 });
 
-gulp.task('coverage', (cb) => {
+gulp.task('coverage', () => {
   gulp.src('./build/**/*.js')
     .pipe(istanbul())
     .pipe(istanbul.hookRequire())
@@ -47,7 +50,8 @@ gulp.task('coverage', (cb) => {
         .pipe(jasmineNode())
         .pipe(istanbul.writeReports())
         .pipe(istanbul.enforceThresholds({ thresholds: { global: 70 } }))
-        .on('end', cb)
+        .on('error', () => exit())
+        .on('end', () => exit())
         .pipe(exit());
     });
 });

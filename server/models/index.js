@@ -1,13 +1,16 @@
 import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
+import dotenv from 'dotenv';
 
-const configfile = require('../config/config.json');
-// import configfile from '../config/config.json';
+const configfile = require('../../server/config/config');
+
+dotenv.config();
 
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = configfile[env];
+
 const db = {};
 
 let sequelize;
