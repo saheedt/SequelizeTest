@@ -1,9 +1,11 @@
 import http from 'http';
 import express from 'express';
-// import path from 'path';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
+import { log } from 'util';
+
+import Routes from './router/routes';
 
 dotenv.config();
 
@@ -15,8 +17,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-
-// import defined routes and pass in app instance..
+Routes(app);
 
 app.route('*').get((req, res) => res.status(404).send({
   message: 'invalid route!',
@@ -33,5 +34,5 @@ app.route('*').delete((req, res) => res.status(404).send({
 
 const server = http.createServer(app);
 server.listen(port);
-
+log(`listening on port: ${port}`);
 export default server;
